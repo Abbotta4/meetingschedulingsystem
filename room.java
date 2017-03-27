@@ -20,6 +20,14 @@ public class room {
     public static void setMaxRooms(int aMaxRooms) {
         maxRooms = aMaxRooms;
     }
+    
+    public meeting findMeeting(String name) {
+        for(meeting Meeting : meetings) {
+            if(Meeting.getName().equals(name))
+                return Meeting;
+        }
+        return null;
+    }
 
     public int getNumber() {
         return number;
@@ -48,5 +56,13 @@ public class room {
                     meetings[i].printPeople();
                 }
             }
+    }
+    
+    public boolean isEmpty() {
+        for (meeting Meeting : meetings) {
+            if (Meeting != null)
+                return false;
+        }
+        return true;
     }
 }
