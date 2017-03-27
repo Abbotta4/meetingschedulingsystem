@@ -6,7 +6,7 @@ package meetingschedulingsystem;
 public class room {
     private static int maxRooms = 0;
     private int number;
-    private java.util.ArrayList<meeting> meetings;
+    private meeting[] meetings;
 
     public static int getMaxRooms() {
         return maxRooms;

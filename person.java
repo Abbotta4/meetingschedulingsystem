@@ -6,9 +6,9 @@ package meetingschedulingsystem;
 public class person {
     private String first;
     private String last;
-    private int phone;
+    private long phone;
     
-    public person(String first, String last, int phone) {
+    public person(String first, String last, long phone) {
         this.first = first;
         this.last = last;
         this.phone = phone;
@@ -34,11 +34,11 @@ public class person {
         this.last = last;
     }
 
-    public int getPhone() {
+    public long getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(long phone) {
         this.phone = phone;
     }
 }
