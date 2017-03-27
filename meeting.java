@@ -29,8 +29,10 @@ public class meeting {
     }
     
     public void printPeople() {
-        for (person Person : people)
-            System.out.println(Person.getFirst());
+        if (!people.isEmpty()) {
+            for (person Person : people)
+                System.out.printf("\t\t* %s %s Phone: %d\n", Person.getFirst(), Person.getLast(), Person.getPhone());
+        }
     }
 
     public String getName() {

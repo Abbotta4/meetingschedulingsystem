@@ -8,19 +8,20 @@ import java.util.ArrayList;
  */
 public class MeetingSchedulingSystem {
 
-    ArrayList<room> rooms = new ArrayList<>();
+    private static ArrayList<room> rooms = new ArrayList<>();
     
-    public void addRoom(room Room) {
+    public static void addRoom(room Room) {
         rooms.add(Room);
     }
     
-    public void delRoom(room Room) {
+    public static void delRoom(room Room) {
         rooms.remove(Room);
     }
     
-    public void printSchedule() {
+    public static void printSchedule() {
         for(room Room : rooms) {
-            System.out.printf("Room %d", args)
+            System.out.printf("Room: %d\n", Room.getNumber());
+            Room.printMeetings();
         }
     }
     
@@ -45,15 +46,12 @@ public class MeetingSchedulingSystem {
         person james = new person("james", "patterson", 4122902891L);
         person mo = new person("maurice", "meyers", 4122902892L);
         meeting important = new meeting("important", 9, 1);
-        
+        room entry = new room(201);
+        rooms.add(entry);
+        entry.addMeeting(important);
         important.addPerson(james);
         important.addPerson(mo);
-        System.out.println("added them successfully");
-        important.printPeople();
-        
-        important.delPerson(james);
-        
-        important.printPeople();
+     
+        printSchedule();
     }
-    
 }

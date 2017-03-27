@@ -8,6 +8,11 @@ public class room {
     private int number;
     private meeting[] meetings;
 
+    public room(int number) {
+        this.number = number;
+        meetings = new meeting[8];
+    }
+    
     public static int getMaxRooms() {
         return maxRooms;
     }
@@ -25,7 +30,8 @@ public class room {
     }
     
     public void addMeeting(meeting newMeeting) {
-        
+        for(int i = newMeeting.getTime() - 9; i < newMeeting.getDuration(); i++)
+            meetings[i] = newMeeting;
     }
     
     public void delMeeting(meeting delMeeting) {
@@ -33,6 +39,14 @@ public class room {
     }
     
     public void printMeetings() {
-        
+            for (int i = 0; i < meetings.length; i++) {
+                if (meetings[i] != null && (0 == i || meetings[i] != meetings[i-1])) {
+                    int tempTime = meetings[i].getTime() + meetings[i].getDuration();
+                    if(tempTime > 12)
+                        tempTime -= 12;
+                    System.out.printf("\t%d-%d Meeting: %s\n", meetings[i].getTime(), tempTime, meetings[i].getName());
+                    meetings[i].printPeople();
+                }
+            }
     }
 }
