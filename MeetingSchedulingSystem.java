@@ -50,7 +50,7 @@ public class MeetingSchedulingSystem {
         }
         System.out.printf("Participants:\n");
         for(person Person: people) {
-            System.out.printf("\t%s %s Phone: %d", Person.getFirst(), Person.getLast(), Person.getPhone());
+            System.out.printf("\t%s %s Phone: %d\n", Person.getFirst(), Person.getLast(), Person.getPhone());
         }
     }
     
