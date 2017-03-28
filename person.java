@@ -20,6 +20,48 @@ public class person {
         this("null", "null", 0);
     }
     
+    public void addMeeting(meeting Meeting) {
+        int start = Meeting.getTime() - 9;
+        int end = start + Meeting.getDuration();
+        for(int i = start; i < end; i++) {
+            if(this.meetings[i] != null) {
+                System.err.println("Meeting conflicts with person's schedule.");
+                return;
+            }
+        }
+        for(int i = start; i < end; i++)
+            this.meetings[i] = Meeting;
+    }
+    
+    public void delMeeting(int time) {
+        int start;
+        if(meetings[time] != null)
+            start = meetings[time].getTime();
+        else {
+            System.err.println("Person does not have a meeting at this time.");
+            return;
+        }
+        int end = start + meetings[start].getDuration();
+        for(int i = start; i < end; i++)
+            meetings[i] = null;
+    }
+    
+    public boolean equals(person Person) {
+        if(!this.getFirst().equals(Person.getFirst()))
+            return false;
+        if(!this.getLast().equals(Person.getLast()))
+            return false;
+        return true;
+    }
+    
+    public boolean noMeetings() {
+        for(meeting Meeting : meetings) {
+            if(Meeting != null)
+                return false;
+        }
+        return true;
+    }
+    
     public String getFirst() {
         return first;
     }
