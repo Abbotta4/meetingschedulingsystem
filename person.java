@@ -7,11 +7,13 @@ public class person {
     private String first;
     private String last;
     private long phone;
+    private meeting meetings[];
     
     public person(String first, String last, long phone) {
         this.first = first;
         this.last = last;
         this.phone = phone;
+        meetings = new meeting[8];
     }
     
     public person() {

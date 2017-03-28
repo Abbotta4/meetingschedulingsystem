@@ -18,6 +18,14 @@ public class meeting {
         this.people = new ArrayList<>();
     }
     
+    public person findPerson(String first, String last) {
+        for(person Person : people) {
+            if(Person.getFirst().equals(first) && Person.getLast().equals(last))
+                return Person;
+        }
+        return null;
+    }
+    
     public void addPerson(person newPerson){
         if(null == people || !people.contains(newPerson)) {
             people.add(newPerson);
@@ -30,7 +38,7 @@ public class meeting {
     
     public void printPeople() {
         if (!people.isEmpty()) {
-            for (person Person : people)
+            for(person Person : people)
                 System.out.printf("\t\t* %s %s Phone: %d\n", Person.getFirst(), Person.getLast(), Person.getPhone());
         }
     }
