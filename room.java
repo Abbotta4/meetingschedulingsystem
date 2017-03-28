@@ -41,7 +41,7 @@ public class room {
         boolean fit = true;
         if(time >= 1 && time <= 5)
             time += 12;
-        if(time >= 9 || time <= 17) {
+        if(time >= 9 && time <= 17 && time + duration <=17) {
             for(int i = time - 9; i < duration; i++) {
                 if(meetings[i] != null)
                     fit = false;

@@ -90,7 +90,10 @@ public class MeetingSchedulingSystem {
             }while(num < 0);
             room delRoom = findRoom(num);
             if(delRoom != null)
-                rooms.remove(delRoom);
+                if(delRoom.isEmpty())
+                    rooms.remove(delRoom);
+                else
+                    System.err.printf("Room %d is non-empty and cannot be deleted.\n", num);
             else
                 System.err.printf("Could not find room %d to delete.", num);
         }else {
