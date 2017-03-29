@@ -63,6 +63,12 @@ public class room {
     }
     
     public void delMeeting(meeting delMeeting) {
+        for(int i = 0; i < meetings.length; i++) {
+            if(meetings[i] != null && !meetings[i].getPeople().isEmpty()) {
+                System.err.println("Meeting is non-empty and cannot be deleted.");
+                return;
+            }
+        }
         for(int i = delMeeting.getTime() - 9; i < delMeeting.getDuration(); i++)
             meetings[i] = null;
     }

@@ -88,42 +88,69 @@ public class MeetingSchedulingSystem {
             return;
         }
         int roomSel;
-            do {
-                for(int i = 0; i < rooms.size(); i++)
-                    System.out.printf("%d: Room %d\n", i, rooms.get(i).getNumber());
-                roomSel = (int)readLong("Which room should be deleted? ");
-            }while(roomSel < 0 || roomSel > rooms.size() - 1);
-            room delRoom = rooms.get(roomSel);
-            if(delRoom.isEmpty())
-                rooms.remove(delRoom);
-            else{
-                System.err.printf("Room %d is non-empty and cannot be deleted.\n", roomSel);
-            }
+        do {
+            for(int i = 0; i < rooms.size(); i++)
+                System.out.printf("%d: Room %d\n", i, rooms.get(i).getNumber());
+            roomSel = (int)readLong("Which room should be deleted? ");
+        }while(roomSel < 0 || roomSel > rooms.size() - 1);
+        room delRoom = rooms.get(roomSel);
+        if(delRoom.isEmpty())
+            rooms.remove(delRoom);
+        else{
+            System.err.printf("Room %d is non-empty and cannot be deleted.\n", roomSel);
+        }
     }
     
     private static void addMeeting() {
+        if(rooms.isEmpty()) {
+            System.err.println("No rooms to add meetings to");
+            return;
+        }
+        String name = readString("What is the name of the meeting? ");
+        System.out.println(name);
+        int time = (int)readLong("What time will the meeting start? ");
+        int duration = (int)readLong("How many hours will the meeting last? ");
         
-        int time = (int)readLong("What time does the meeting start? ");
-        int mRoom = (int)readLong("Which room is the meeting in? ");
-        meeting dMeeting;
-        room delRoom = findRoom(mRoom);
-        dMeeting = delRoom.findMeeting(time);
-        if(dMeeting != null)
-            delRoom.delMeeting(dMeeting);
-        else
-            System.err.printf("Could not find meeting at %d in Room %d.\n", time, mRoom);
+        int roomSel;
+        do {
+            for(int i = 0; i < rooms.size(); i++)
+                System.out.printf("%d: Room %d\n", i, rooms.get(i).getNumber());
+            roomSel = (int)readLong("Which room should the meeting be added to? ");
+        }while(roomSel < 0 || roomSel > rooms.size() - 1);
+        room addRoom = rooms.get(roomSel);
+        addRoom.addMeeting(name, time, duration);
     }
     
     private static void delMeeting() {
-        int time = (int)readLong("What time does the meeting start? ");
-        int mRoom = (int)readLong("Which room is the meeting in? ");
-        meeting dMeeting;
-        room delRoom = findRoom(mRoom);
-        dMeeting = delRoom.findMeeting(time);
-        if(dMeeting != null)
-            delRoom.delMeeting(dMeeting);
-        else
-            System.err.printf("Could not find meeting at %d in Room %d.\n", time, mRoom);
+        if(rooms.isEmpty()) {
+            System.err.println("No rooms to delete meetings from.");
+            return;
+        }
+        
+        int roomSel;
+        do {
+            for(int i = 0; i < rooms.size(); i++)
+                System.out.printf("%d: Room %d\n", i, rooms.get(i).getNumber());
+            roomSel = (int)readLong("Which room should the meeting be deleted from? ");
+        }while(roomSel < 0 || roomSel > rooms.size() - 1);
+        room delRoom = rooms.get(roomSel);
+        
+        meeting meetings[] = delRoom.getMeetings();
+        int meetingSel;
+        do {
+            for(int i = 0; i < meetings.length; i++) {
+                if (delRoom.getMeetings()[i] != null && (0 == i || meetings[i] != meetings[i-1])) {
+                        int tempTime = meetings[i].getTime() + meetings[i].getDuration();
+                        if(tempTime > 12)
+                            tempTime -= 12;
+                        System.out.printf("%d: %d-%d Meeting: %s\n", i, meetings[i].getTime(), tempTime, meetings[i].getName());
+                }
+            }
+            meetingSel = (int)readLong("Which meeting should be deleted? ");            
+            if(meetings[meetingSel] != null && meetings[meetingSel].getTime() != meetingSel + 9)
+                meetingSel = -1;
+        }while(meetingSel < 0 || meetingSel > meetings.length - 1 || meetings[meetingSel] == null);
+        delRoom.delMeeting(meetings[meetingSel]);
     }
      
     private static void addParticipant() {
@@ -146,20 +173,19 @@ public class MeetingSchedulingSystem {
     }
     
     private static void delParticipant() {
-        String first = readString("What is the first name of the person? ");
-        String last = readString("What is the last name of the person? ");
-        for(person Person : people) {
-            if(Person.getFirst().equals(first) && Person.getLast().equalsIgnoreCase(last)) {
-                if(Person.noMeetings()) {
-                    people.remove(Person);
-                    return;
-                }else {
-                    System.err.printf("%s %s has meetings and cannot be deleted.\n", first, last);
-                    return;
-                }
-            }
+        if(people.isEmpty()) {
+            System.err.println("No people to delete.");
+            return;
         }
-        System.err.printf("Could not find %s %s.\n", first, last);
+        
+        int personSel;    
+        do {
+            for(int i = 0; i < people.size(); i++)
+                System.out.printf("%d: %s %s\n", i, people.get(i).getFirst(), people.get(i).getLast());
+            personSel = (int)readLong("Which person should be deleted? ");
+        }while(personSel < 0 || personSel > people.size() - 1);
+        person personToDel = people.get(personSel);
+        people.remove(personToDel);
     }
     
     private static void addToMeeting() {
