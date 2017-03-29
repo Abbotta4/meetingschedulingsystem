@@ -52,7 +52,7 @@ public class room {
             }
             if(fit) {
             meeting temp = new meeting(name, time, duration);
-            for(int i = time - 9; i < duration; i++)
+            for(int i = time - 9; i < time + duration - 9; i++)
                 meetings[i] = temp;
             }else {
                 System.err.printf("Meeting conflicts with another meeting.\n");

@@ -107,7 +107,6 @@ public class MeetingSchedulingSystem {
             return;
         }
         String name = readString("What is the name of the meeting? ");
-        System.out.println(name);
         int time = (int)readLong("What time will the meeting start? ");
         int duration = (int)readLong("How many hours will the meeting last? ");
         
