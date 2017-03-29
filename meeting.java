@@ -43,6 +43,10 @@ public class meeting {
         }
     }
 
+    public ArrayList<person> getPeople() {
+        return people;
+    }
+    
     public String getName() {
         return name;
     }

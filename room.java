@@ -21,6 +21,10 @@ public class room {
         maxRooms = aMaxRooms;
     }
     
+    public meeting[] getMeetings() {
+        return meetings;
+    }
+    
     public meeting findMeeting(long time) {
         for(int i = 0; i < meetings.length; i++) {
             if(meetings[i] != null && meetings[i].getTime() == time)
