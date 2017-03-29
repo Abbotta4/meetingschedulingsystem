@@ -76,10 +76,13 @@ public class room {
     public void printMeetings() {
             for (int i = 0; i < meetings.length; i++) {
                 if (meetings[i] != null && (0 == i || meetings[i] != meetings[i-1])) {
-                    int tempTime = meetings[i].getTime() + meetings[i].getDuration();
+                    int tempEnd = meetings[i].getTime() + meetings[i].getDuration();
+                    if(tempEnd > 12)
+                        tempEnd -= 12;
+                    int tempTime = meetings[i].getTime();
                     if(tempTime > 12)
                         tempTime -= 12;
-                    System.out.printf("\t%d-%d Meeting: %s\n", meetings[i].getTime(), tempTime, meetings[i].getName());
+                    System.out.printf("\t%d-%d Meeting: %s\n", tempTime, tempEnd, meetings[i].getName());
                     meetings[i].printPeople();
                 }
             }
