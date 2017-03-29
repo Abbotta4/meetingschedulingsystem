@@ -54,6 +54,14 @@ public class MeetingSchedulingSystem {
         }
     }
     
+    private static boolean ifOption(int sel, ArrayList<int> al) {
+        for(int find : al) {
+            if(find == sel)
+                return true;
+        }
+        return false;
+    }
+    
     public static room findRoom(int num) {
         for(room Room : rooms) {
             if(Room.getNumber() == num)
@@ -162,6 +170,7 @@ public class MeetingSchedulingSystem {
         System.err.printf("Could not find %s %s.\n", first, last);
     }
     
+    /*
     public static void addToMeeting() {
         String first = readString("What is the first name of the person? ");
         String last = readString("What is the last name of the person? ");
@@ -179,6 +188,33 @@ public class MeetingSchedulingSystem {
             searchMeeting.addPerson(searchPerson);                                                
         }else
             System.err.printf("Could not find %s %s in participants\n", first, last);
+    }
+    */
+    
+    public static void addToMeeting() {
+        for(int i = 0; i < people.size(); i++)
+            System.out.printf("%d: %s %s\n", i, people.get(i).getFirst(), people.get(i).getLast());
+        int personSel = (int)readLong("Which person should be added to a meeting? ");
+        person personToAdd = people.get(personSel);
+        
+        for(int i = 0; i < rooms.size(); i++)
+            System.out.printf("%d: Room %d\n", i, rooms.get(i).getNumber());
+        int roomSel = (int)readLong("Which room is the meeting in? ");
+        room roomAddedTo = rooms.get(roomSel);
+        
+        meeting meetings[] = roomAddedTo.getMeetings();
+        for(int i = 0; i < meetings.length; i++) {
+            if (roomAddedTo.getMeetings()[i] != null && (0 == i || meetings[i] != meetings[i-1])) {
+                    int tempTime = meetings[i].getTime() + meetings[i].getDuration();
+                    if(tempTime > 12)
+                        tempTime -= 12;
+                    System.out.printf("%d: %d-%d Meeting: %s\n", i, meetings[i].getTime(), tempTime, meetings[i].getName());
+            }
+        }
+        int meetingSel = (int)readLong("Which meeting should the person be added to? ");
+        meeting meetingAddedTo = meetings[meetingSel];
+        personToAdd.addMeeting(meetingAddedTo);
+        meetingAddedTo.addPerson(personToAdd);
     }
     
     public static void delFromMeeting() {
