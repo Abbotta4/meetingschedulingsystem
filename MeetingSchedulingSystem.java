@@ -102,26 +102,16 @@ public class MeetingSchedulingSystem {
     }
     
     private static void addMeeting() {
-        if(rooms.isEmpty()) {
-            System.err.println("There are no rooms to add a meeting to.");
-            return;
-        }
-            
-        boolean success = false;
-        String name = readString("What is the name of the meeting? ");
-        System.out.println(name);
-        int time = (int)readLong("What time will the meeting start? ");
-        int duration = (int)readLong("How many hours will the meeting last? ");
-        int mRoom = (int)readLong("Which room will the meeting be held in? ");
-        for(room Room : rooms) {
-            if(Room.getNumber() == mRoom) {
-                Room.addMeeting(name, time, duration);
-                success = true;
-                break;
-            }
-        }
-        if(!success)
-            System.err.printf("Could not find room %d\n", mRoom);
+        
+        int time = (int)readLong("What time does the meeting start? ");
+        int mRoom = (int)readLong("Which room is the meeting in? ");
+        meeting dMeeting;
+        room delRoom = findRoom(mRoom);
+        dMeeting = delRoom.findMeeting(time);
+        if(dMeeting != null)
+            delRoom.delMeeting(dMeeting);
+        else
+            System.err.printf("Could not find meeting at %d in Room %d.\n", time, mRoom);
     }
     
     private static void delMeeting() {
