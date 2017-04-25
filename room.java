@@ -4,21 +4,12 @@ package meetingschedulingsystem;
  * @author ASA5286
  */
 public class room {
-    private static int maxRooms = 0;
     private int number;
     private meeting[] meetings;
 
     public room(int number) {
         this.number = number;
         meetings = new meeting[8];
-    }
-    
-    public static int getMaxRooms() {
-        return maxRooms;
-    }
-
-    public static void setMaxRooms(int aMaxRooms) {
-        maxRooms = aMaxRooms;
     }
     
     public meeting[] getMeetings() {

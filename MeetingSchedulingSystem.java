@@ -2,14 +2,15 @@ package meetingschedulingsystem;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 
 /**
  * @author ASA5286
  */
 public class MeetingSchedulingSystem {
 
-    private static ArrayList<room> rooms = new ArrayList<>();
-    private static ArrayList<person> people = new ArrayList<>();
+    public static ArrayList<room> rooms = new ArrayList<>();
+    public static ArrayList<person> people = new ArrayList<>();
     
     private static long readLong(String prompt) {
         long temp;
@@ -54,45 +55,11 @@ public class MeetingSchedulingSystem {
         }
     }
     
-    private static room findRoom(int num) {
-        for(room Room : rooms) {
-            if(Room.getNumber() == num)
-                return Room;
-        }
-        return null;
-    }
-    
-    private static void addRoom() {
-        int num;
-        boolean roomExists = false;
-        if(0 == room.getMaxRooms() || rooms.size() < room.getMaxRooms()) {
-            do {
-                num = (int)readLong("What is the room number? ");
-            }while(num < 0);
-            for(room Room : rooms) {
-                if(Room.getNumber() == num)
-                    roomExists = true;
-            }
-            if(!roomExists)
-                rooms.add(new room(num));
-            else
-                System.err.printf("Room %d already exists.\n", num);
-        }else {
-            System.err.printf("Cannot add room, reached maximum rooms.\n");
-        }
-    }
-    
-    private static void delRoom() {
+    public static void delRoom(int roomSel) {
         if(rooms.isEmpty()) {
             System.err.println("No rooms to delete.");
             return;
         }
-        int roomSel;
-        do {
-            for(int i = 0; i < rooms.size(); i++)
-                System.out.printf("%d: Room %d\n", i, rooms.get(i).getNumber());
-            roomSel = (int)readLong("Which room should be deleted? ");
-        }while(roomSel < 0 || roomSel > rooms.size() - 1);
         room delRoom = rooms.get(roomSel);
         if(delRoom.isEmpty())
             rooms.remove(delRoom);
@@ -188,7 +155,7 @@ public class MeetingSchedulingSystem {
     }
     
     private static void addToMeeting() {
-        if(people.size() == 0) {
+        if(people.isEmpty()) {
             System.err.println("No people to add to meetings.");
             return;
         }
@@ -239,7 +206,7 @@ public class MeetingSchedulingSystem {
     
     private static void delFromMeeting() {
         
-        if(rooms.size() == 0) {
+        if(rooms.isEmpty()) {
             System.err.println("No rooms to delete people from.");
             return;
         }
@@ -290,16 +257,23 @@ public class MeetingSchedulingSystem {
         meetingDelFrom.delPerson(personToDel);
     }
     
+    public static void mainMenu() {
+        menu main = new menu();
+        
+        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        main.setSize(250, 300);
+        main.setVisible(true);
+    }
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         int temp;
         
-        do {
-            temp = (int)readLong("How many rooms are there in the building? (0 to disable max) ");
-        }while (temp < 0);
-        room.setMaxRooms(temp);
+        mainMenu();
+
+        /*
         do {           
             temp = (int)readLong("\n1: Add room\n2: Delete room\n3: Add meeting to room\n4: Delete meeting from room\n"
                 + "5: Add person to participants.\n6: Delete person from participants.\n7: Add participant to meeting\n8: Delete participant from meeting\n"
@@ -339,5 +313,6 @@ public class MeetingSchedulingSystem {
                     System.err.println("Invalid menu selection.");
             }
         }while(temp != 10);
+        */
     }
 }
