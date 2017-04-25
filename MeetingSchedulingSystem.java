@@ -68,22 +68,12 @@ public class MeetingSchedulingSystem {
         }
     }
     
-    private static void addMeeting() {
+    public static void addMeeting(String name, int room, int time, int duration) {
         if(rooms.isEmpty()) {
             System.err.println("No rooms to add meetings to");
             return;
-        }
-        String name = readString("What is the name of the meeting? ");
-        int time = (int)readLong("What time will the meeting start? ");
-        int duration = (int)readLong("How many hours will the meeting last? ");
-        
-        int roomSel;
-        do {
-            for(int i = 0; i < rooms.size(); i++)
-                System.out.printf("%d: Room %d\n", i, rooms.get(i).getNumber());
-            roomSel = (int)readLong("Which room should the meeting be added to? ");
-        }while(roomSel < 0 || roomSel > rooms.size() - 1);
-        room addRoom = rooms.get(roomSel);
+        }        
+        room addRoom = rooms.get(room);
         addRoom.addMeeting(name, time, duration);
     }
     

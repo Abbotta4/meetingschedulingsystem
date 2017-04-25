@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class menu extends JFrame {
     private JButton select;
     private ButtonGroup buttonGroup;
-    private JRadioButton addRoom, delRoom, addMeet, delMeet, addPart, delPart, addPToM, delPFrM;
+    private JRadioButton addRoom, delRoom, addMeet, delMeet, addPart, delPart, addPToM, delPFrM, display;
     
     private static <T> String[] toStringArray(ArrayList<T> list) {
         String[] returnArray = new String[list.size()];
@@ -52,7 +52,7 @@ public class menu extends JFrame {
     public menu() {
         super("Scheduler");
         
-        setLayout(new GridLayout(9, 1));
+        setLayout(new GridLayout(10, 1));
         
         buttonGroup = new ButtonGroup();
         addRoom = new JRadioButton("Add room", true);
@@ -63,6 +63,7 @@ public class menu extends JFrame {
         delPart = new JRadioButton("Delete person from participants", false);
         addPToM = new JRadioButton("Add participant to meeting", false);
         delPFrM = new JRadioButton("Delete participant from meeting", false);
+        display = new JRadioButton("Display Schedule", false);
         buttonGroup.add(addRoom);
         buttonGroup.add(delRoom);
         buttonGroup.add(addMeet);
@@ -71,6 +72,7 @@ public class menu extends JFrame {
         buttonGroup.add(delPart);
         buttonGroup.add(addPToM);
         buttonGroup.add(delPFrM);
+        buttonGroup.add(display);
                 
         select = new JButton("Show");
 
@@ -82,6 +84,7 @@ public class menu extends JFrame {
         add(delPart);
         add(addPToM);
         add(delPFrM);
+        add(display);
         add(select);
         
         selectionHandler handler = new selectionHandler();
@@ -102,8 +105,13 @@ public class menu extends JFrame {
                     delRoomP.setVisible(true);
                     dispose();
                 }
-                if(addMeet.isSelected())
-                    getContentPane().setBackground(new Color(111, 183, 214));
+                if(addMeet.isSelected()) {
+                    addMeet addMeetP = new addMeet();
+                    addMeetP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    addMeetP.setSize(250, 300);
+                    addMeetP.setVisible(true);
+                    dispose();
+                }
                 if(delMeet.isSelected())
                     getContentPane().setBackground(new Color(255, 250, 129));
                 if(addPart.isSelected())

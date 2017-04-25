@@ -1,6 +1,7 @@
 package meetingschedulingsystem;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JList;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -24,24 +25,21 @@ public class delRoom extends JFrame{
             roomNumbers[i] = MeetingSchedulingSystem.rooms.get(i).getNumber();
 
         setLayout(new BorderLayout());
-
-       // Integer[] roomNumbers = {1, 2, 3, 4};
         
         options = new JList<>(roomNumbers);
+        options.setVisibleRowCount(3);
+        options.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        options.setSelectedIndex(0);
+        
         confirm = new JButton("Confirm");
         back = new JButton("Back");
         
-        options.setVisibleRowCount(3);
-        
-        // Only one list selection should be selected at a time
-        options.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        // set first option to be selected by default
-        options.setSelectedIndex(0);
+        JPanel buttons = new JPanel();
+        buttons.add(back);
+        buttons.add(confirm);
         
         add(options, BorderLayout.CENTER);
-        //add(back, BorderLayout.SOUTH);
-        add(confirm, BorderLayout.SOUTH);
+        add(buttons, BorderLayout.SOUTH);
 
         handler buttonHandler = new handler();
         confirm.addActionListener(buttonHandler);
@@ -57,11 +55,12 @@ public class delRoom extends JFrame{
                 MeetingSchedulingSystem.delRoom(roomSel);
                 MeetingSchedulingSystem.mainMenu();
                 dispose();
-            } else{
+            } else {
                 System.err.printf("Room %d is non-empty and cannot be deleted.\n", roomSel);
         }
             if(event.getSource() == back) {
-                // Display menu
+                MeetingSchedulingSystem.mainMenu();
+                dispose();
             }
         }
     }
