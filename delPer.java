@@ -200,6 +200,7 @@ public class delPer extends JFrame {
                 meetings.setVisibleRowCount(3);
                 meetings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 meetings.setSelectedIndex(0);
+                meetings.addListSelectionListener(new listener());
 
 
                 add(meetings, BorderLayout.CENTER);
