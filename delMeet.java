@@ -61,7 +61,7 @@ public class delMeet extends JFrame {
         int k = 0;
         for(int i = 0; i < meetingStrings.length; i++) {
             int j = i + k;
-            while(iterMeets[j] == null || (j + 1 < meetingStrings.length && iterMeets[j+1] == iterMeets[j])) {
+            while(iterMeets[j] == null || (j + 1 < iterMeets.length && iterMeets[j+1] == iterMeets[j])) {
                 j++;
                 k++;
             }

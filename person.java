@@ -35,14 +35,15 @@ public class person {
     
     public void delMeeting(int time) {
         int start;
+        time -= 9;
         if(meetings[time] != null)
-            start = meetings[time].getTime();
+            start = meetings[time].getTime() - 9;
         else {
             System.err.println("Person does not have a meeting at this time.");
             return;
         }
         int end = start + meetings[start].getDuration();
-        for(int i = start; i < end; i++)
+        for(int i = start; i < start + end; i++)
             meetings[i] = null;
     }
     

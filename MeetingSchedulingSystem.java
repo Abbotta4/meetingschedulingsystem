@@ -74,6 +74,7 @@ public class MeetingSchedulingSystem {
             return;
         }        
         room addRoom = rooms.get(room);
+        System.out.printf("addRoom.addMeeting(%s, %d, %d", name, time, duration);
         addRoom.addMeeting(name, time, duration);
     }
     
@@ -87,7 +88,8 @@ public class MeetingSchedulingSystem {
         System.out.printf("Room %d selected\n", delRoom.getNumber());
         meeting meetings[] = delRoom.getMeetings();
         System.out.printf(".delMeeting(meetings[%d])\n", timeIndex);
-        delRoom.delMeeting(meetings[timeIndex]);
+        if(timeIndex != -1)
+            delRoom.delMeeting(meetings[timeIndex]);
     }
      
     public static person addParticipant(String first, String last, long phone) {

@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JList;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 public class delPer extends JFrame {
     private JList<Integer> roomOptions;
     private JList<String> meetings, people;
-    private JTextField firstName, lastName, phone;
     private final JButton confirm, back;
 
     public delPer() {
@@ -40,17 +38,8 @@ public class delPer extends JFrame {
         confirm = new JButton("Confirm");
         back = new JButton("Back");
         
-        JPanel pInfo = new JPanel();
-        firstName = new JTextField(15);
-        lastName = new JTextField(15);
-        phone = new JTextField(10);
-        pInfo.add(firstName, BorderLayout.WEST);
-        pInfo.add(lastName, BorderLayout.CENTER);
-        pInfo.add(phone, BorderLayout.EAST);
-        
         JPanel buttons = new JPanel();
         buttons.setLayout(new BorderLayout());
-        buttons.add(pInfo, BorderLayout.NORTH);
         buttons.add(back, BorderLayout.WEST);
         buttons.add(confirm, BorderLayout.EAST);
         
@@ -68,7 +57,7 @@ public class delPer extends JFrame {
         int k = 0;
         for(int i = 0; i < meetingStrings.length; i++) {
             int j = i + k;
-            while(iterMeets[j] == null || (j + 1 < meetingStrings.length && iterMeets[j+1] == iterMeets[j])) {
+            while(iterMeets[j] == null || (j + 1 < iterMeets.length && iterMeets[j+1] == iterMeets[j])) {
                 j++;
                 k++;
             }
@@ -105,9 +94,9 @@ public class delPer extends JFrame {
         back.addActionListener(buttonHandler);
         
         //listener listListener = new listener();
-        //meetings.addListSelectionListener(new listener());
+        meetings.addListSelectionListener(new listener());
         roomOptions.addListSelectionListener(new roomListener());
-        //roomOptions.addListSelectionListener(new listener());
+        roomOptions.addListSelectionListener(new listener());
     }
     
     // Listener class for updating the button grid
@@ -115,9 +104,6 @@ public class delPer extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             if(event.getSource() == confirm) {
-                long phoneL = Long.parseLong(phone.getText());
-                person personToAdd = MeetingSchedulingSystem.addParticipant(firstName.getText(), lastName.getText(), phoneL);
-                
                 meeting[] iterMeetings = MeetingSchedulingSystem.rooms.get(roomOptions.getSelectedIndex()).getMeetings();
                 meeting targetMeeting = null;
                 for(meeting m : iterMeetings){
@@ -144,8 +130,8 @@ public class delPer extends JFrame {
                         targetPerson = p;
                 }
                 
-                MeetingSchedulingSystem.delParticipant(targetPerson);
                 MeetingSchedulingSystem.delFromMeeting(MeetingSchedulingSystem.rooms.get(roomOptions.getSelectedIndex()), targetMeeting, targetPerson);
+                MeetingSchedulingSystem.delParticipant(targetPerson);
                 MeetingSchedulingSystem.mainMenu();
                 dispose();
             }
@@ -157,37 +143,30 @@ public class delPer extends JFrame {
         }
     }
     
-    // Listener class for updating the button grid
-   /* private class listener implements ListSelectionListener {
+    private class listener implements ListSelectionListener {
         @Override
         public void valueChanged(ListSelectionEvent event) {
-            times.remove(length);
+            remove(people);
 
-            meeting[] iterMeets = MeetingSchedulingSystem.rooms.get(roomOptions.getSelectedIndex()).getMeetings();
-            
-            int startTime = start.getSelectedValue();
-            if(startTime >= 1 && startTime <= 5)
-                startTime += 12;
-            startTime -= 8; // Would be -9 but we need the hour after the selected meeting
-            int possibleLengths = 0;
-            while(startTime < iterMeets.length && iterMeets[startTime] == null) {
-                startTime++;
-                possibleLengths++;
+            meeting[] iterMeetings = MeetingSchedulingSystem.rooms.get(roomOptions.getSelectedIndex()).getMeetings();
+            ArrayList<person> iterPeople = iterMeetings[meetings.getSelectedIndex()].getPeople();
+        
+            String[] peopleStrings = new String[iterPeople.size()];
+            for(int i = 0; i < peopleStrings.length; i++) {
+                peopleStrings[i] = String.format("%s %s : %d", iterPeople.get(i).getFirst(), iterPeople.get(i).getLast(), iterPeople.get(i).getPhone());
             }
-            Integer[] lengthList = new Integer[possibleLengths + 1]; // possibleLengths + 1 because the above loop doesn't count the last hour
-            for(int i = 0; i < lengthList.length; i++)
-                lengthList[i] = i + 1;
+
+            people = new JList<>(peopleStrings);
+            people.setVisibleRowCount(3);
+            people.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            people.setSelectedIndex(0);
             
-            length = new JList<>(lengthList);
-            length.setVisibleRowCount(3);
-            length.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            length.setSelectedIndex(0);
+            add(people, BorderLayout.EAST);
             
-            times.add(length, BorderLayout.EAST);
-            
-            times.revalidate(); // update the JPanel
+            revalidate(); // update the JPanel
         }
-    }*/
+    }
+    
         private class roomListener implements ListSelectionListener {
             @Override
             public void valueChanged(ListSelectionEvent event) {
@@ -207,7 +186,7 @@ public class delPer extends JFrame {
                 int k = 0;
                 for(int i = 0; i < meetingStrings.length; i++) {
                     int j = i + k;
-                    while(iterMeets[j] == null || (j + 1 < meetingStrings.length && iterMeets[j+1] == iterMeets[j])) {
+                    while(iterMeets[j] == null || (j + 1 < iterMeets.length && iterMeets[j+1] == iterMeets[j])) {
                         j++;
                         k++;
                     }
@@ -223,7 +202,7 @@ public class delPer extends JFrame {
                 meetings.setSelectedIndex(0);
 
 
-                add(meetings, BorderLayout.EAST);
+                add(meetings, BorderLayout.CENTER);
                 revalidate();
             }
         }
