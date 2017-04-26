@@ -54,14 +54,19 @@ public class room {
     }
     
     public void delMeeting(meeting delMeeting) {
-        for(int i = 0; i < meetings.length; i++) {
+        int endIndex = delMeeting.getTime() - 9 + delMeeting.getDuration();
+        for(int i = delMeeting.getTime() - 9; i < endIndex; i++) {
+            System.out.printf("checking meetings[%d]\n", i);
             if(meetings[i] != null && !meetings[i].getPeople().isEmpty()) {
                 System.err.println("Meeting is non-empty and cannot be deleted.");
                 return;
             }
         }
-        for(int i = delMeeting.getTime() - 9; i < delMeeting.getDuration(); i++)
+        System.out.printf("deleting from meetings[%d] to meetings[%d]\n", delMeeting.getTime() - 9, endIndex);
+        for(int i = delMeeting.getTime() - 9; i < endIndex; i++) {
+            System.out.printf("meetings[%d] = null;\n", i);
             meetings[i] = null;
+        }
     }
     
     public void printMeetings() {

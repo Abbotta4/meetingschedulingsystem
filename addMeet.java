@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JList;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
@@ -41,10 +42,15 @@ public class addMeet extends JFrame {
         back = new JButton("Back");
         
         JPanel buttons = new JPanel();
-        buttons.setLayout(new BorderLayout());
-        buttons.add(back, BorderLayout.WEST);
-        buttons.add(confirm, BorderLayout.EAST);
-        buttons.add(name, BorderLayout.NORTH);
+        JPanel buttonsLow = new JPanel();
+        JPanel buttonsHigh = new JPanel();
+        buttonsLow.setLayout(new BorderLayout());
+        buttonsLow.add(back, BorderLayout.WEST);
+        buttonsLow.add(confirm, BorderLayout.EAST);
+        buttonsLow.add(name, BorderLayout.NORTH);
+        buttonsHigh.add(new JLabel("Meeting name"), BorderLayout.WEST);
+        buttons.add(buttonsLow, BorderLayout.CENTER);
+        buttons.add(buttonsHigh, BorderLayout.NORTH);
         
         meeting[] iterMeets = MeetingSchedulingSystem.rooms.get(roomOptions.getSelectedIndex()).getMeetings();
         
@@ -96,7 +102,7 @@ public class addMeet extends JFrame {
         times.add(start, BorderLayout.WEST);
         times.add(length, BorderLayout.EAST);        
                 
-        add(roomOptions, BorderLayout.CENTER);
+        add(roomOptions, BorderLayout.WEST);
         add(times, BorderLayout.EAST);
         add(buttons, BorderLayout.SOUTH);
         
@@ -116,7 +122,6 @@ public class addMeet extends JFrame {
         public void actionPerformed(ActionEvent event) {
             int roomSel = roomOptions.getSelectedIndex();
             if(event.getSource() == confirm) {
-                System.out.printf("name: %s room[%d]: %d start: %d length: %d\n", name.getText(), roomSel, roomOptions.getSelectedValue(), start.getSelectedValue(), length.getSelectedValue());
                 MeetingSchedulingSystem.addMeeting(name.getText(), roomSel, start.getSelectedValue(), length.getSelectedValue());
                 MeetingSchedulingSystem.mainMenu();
                 dispose();

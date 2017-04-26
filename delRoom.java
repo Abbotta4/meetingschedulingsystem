@@ -55,8 +55,6 @@ public class delRoom extends JFrame{
                 MeetingSchedulingSystem.delRoom(roomSel);
                 MeetingSchedulingSystem.mainMenu();
                 dispose();
-            } else {
-                System.err.printf("Room %d is non-empty and cannot be deleted.\n", roomSel);
         }
             if(event.getSource() == back) {
                 MeetingSchedulingSystem.mainMenu();

@@ -1,6 +1,5 @@
 package meetingschedulingsystem;
 
-import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 public class menu extends JFrame {
     private JButton select;
     private ButtonGroup buttonGroup;
-    private JRadioButton addRoom, delRoom, addMeet, delMeet, addPart, delPart, addPToM, delPFrM, display;
+    private JRadioButton addRoom, delRoom, addMeet, delMeet, addPer, delPart, display;
     
     private static <T> String[] toStringArray(ArrayList<T> list) {
         String[] returnArray = new String[list.size()];
@@ -52,26 +51,26 @@ public class menu extends JFrame {
     public menu() {
         super("Scheduler");
         
-        setLayout(new GridLayout(10, 1));
+        setLayout(new GridLayout(8, 1));
         
         buttonGroup = new ButtonGroup();
         addRoom = new JRadioButton("Add room", true);
         delRoom = new JRadioButton("Delete room", false);
         addMeet = new JRadioButton("Add meeting to room", false);
         delMeet = new JRadioButton("Delete meeting from room", false);
-        addPart = new JRadioButton("Add person to participants", true);
-        delPart = new JRadioButton("Delete person from participants", false);
-        addPToM = new JRadioButton("Add participant to meeting", false);
-        delPFrM = new JRadioButton("Delete participant from meeting", false);
+        addPer = new JRadioButton("Add person to meeting", true);
+        delPart = new JRadioButton("Delete person from meeting", false);
+        //addPToM = new JRadioButton("Add participant to meeting", false);
+        //delPFrM = new JRadioButton("Delete participant from meeting", false);
         display = new JRadioButton("Display Schedule", false);
         buttonGroup.add(addRoom);
         buttonGroup.add(delRoom);
         buttonGroup.add(addMeet);
         buttonGroup.add(delMeet);
-        buttonGroup.add(addPart);
+        buttonGroup.add(addPer);
         buttonGroup.add(delPart);
-        buttonGroup.add(addPToM);
-        buttonGroup.add(delPFrM);
+        //buttonGroup.add(addPToM);
+        //buttonGroup.add(delPFrM);
         buttonGroup.add(display);
                 
         select = new JButton("Show");
@@ -80,10 +79,10 @@ public class menu extends JFrame {
         add(delRoom);
         add(addMeet);
         add(delMeet);
-        add(addPart);
+        add(addPer);
         add(delPart);
-        add(addPToM);
-        add(delPFrM);
+        //add(addPToM);
+        //add(delPFrM);
         add(display);
         add(select);
         
@@ -112,16 +111,27 @@ public class menu extends JFrame {
                     addMeetP.setVisible(true);
                     dispose();
                 }
-                if(delMeet.isSelected())
-                    getContentPane().setBackground(new Color(255, 250, 129));
-                if(addPart.isSelected())
-                    getContentPane().setBackground(new Color(255, 250, 129));
-                if(delPart.isSelected())
-                    getContentPane().setBackground(new Color(255, 250, 129));
-                if(addPToM.isSelected())
-                    getContentPane().setBackground(new Color(255, 250, 129));
-                if(delPFrM.isSelected())
-                    getContentPane().setBackground(new Color(255, 250, 129));
+                if(delMeet.isSelected()) {
+                    delMeet delMeetP = new delMeet();
+                    delMeetP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    delMeetP.setSize(250, 300);
+                    delMeetP.setVisible(true);
+                    dispose();
+                }
+                if(addPer.isSelected()) {
+                    addPer addPerP = new addPer();
+                    addPerP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    addPerP.setSize(500, 300);
+                    addPerP.setVisible(true);
+                    dispose();
+                }
+                if(delPart.isSelected()) {
+                    delPer delPerP = new delPer();
+                    delPerP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    delPerP.setSize(500, 300);
+                    delPerP.setVisible(true);
+                    dispose();
+                }
             }
         }
     }
