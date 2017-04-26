@@ -112,7 +112,7 @@ public class MeetingSchedulingSystem {
         people.remove(personToDel);
     }
     
-    public static void addToMeeting(person personToAdd, meeting meetingAddedTo) {
+    public static boolean addToMeeting(person personToAdd, meeting meetingAddedTo) {
         /*if(people.isEmpty()) {
             System.err.println("No people to add to meetings.");
             return;
@@ -120,12 +120,16 @@ public class MeetingSchedulingSystem {
 
         if(rooms.isEmpty()) {
             System.err.println("No rooms to add person to.");
-            return;
+            return false;
         }
-        System.out.printf("Adding %s to %s %s\n", meetingAddedTo.getName(), personToAdd.getFirst(), personToAdd.getLast());
-        personToAdd.addMeeting(meetingAddedTo);
-        System.out.printf("Adding %s %s to %s\n", personToAdd.getFirst(), personToAdd.getLast(), meetingAddedTo.getName());
-        meetingAddedTo.addPerson(personToAdd);
+        if(personToAdd.meetingFits(meetingAddedTo) && meetingAddedTo.personFits(personToAdd)){
+            System.out.printf("Adding %s to %s %s\n", meetingAddedTo.getName(), personToAdd.getFirst(), personToAdd.getLast());
+            personToAdd.addMeeting(meetingAddedTo);
+            System.out.printf("Adding %s %s to %s\n", personToAdd.getFirst(), personToAdd.getLast(), meetingAddedTo.getName());
+            meetingAddedTo.addPerson(personToAdd);
+            return true;
+        } else
+            return false;
     }
     
     public static void delFromMeeting(room roomDelFrom, meeting meetingDelFrom, person personToDel) {
