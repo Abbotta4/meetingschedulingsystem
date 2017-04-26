@@ -11,6 +11,7 @@ import java.awt.BorderLayout;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.ListSelectionModel;
+import javax.swing.JOptionPane;
 
 /**
  * @author ASA5286
@@ -101,7 +102,24 @@ public class addPer extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             if(event.getSource() == confirm) {
-                long phoneL = Long.parseLong(phone.getText());
+                long phoneL;
+                try {
+                    phoneL = Long.parseLong(phone.getText());
+                } catch (NumberFormatException e) {
+                    System.err.println(e);
+                    JOptionPane.showMessageDialog(null, "You entered an incorrect phone number\n", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    MeetingSchedulingSystem.mainMenu();
+                    dispose();
+                    return;
+                }
+                if(phoneL < 1000000000L || phoneL > 9999999999L) {
+                    System.err.println("Not a valid phone number");
+                    JOptionPane.showMessageDialog(null, "You entered an incorrect phone number\n", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    MeetingSchedulingSystem.mainMenu();
+                    dispose();
+                    return;
+                }
+                
                 person personToAdd = MeetingSchedulingSystem.addParticipant(firstName.getText(), lastName.getText(), phoneL);
                 
                 meeting[] iterMeetings = MeetingSchedulingSystem.rooms.get(roomOptions.getSelectedIndex()).getMeetings();
@@ -123,7 +141,8 @@ public class addPer extends JFrame {
                     }
                 }
                 
-                MeetingSchedulingSystem.addToMeeting(personToAdd, targetMeeting);
+                if(targetMeeting == null || !MeetingSchedulingSystem.addToMeeting(personToAdd, targetMeeting))
+                        JOptionPane.showMessageDialog(null, "Could not add person to meeting", "ERROR", JOptionPane.ERROR_MESSAGE);
                 MeetingSchedulingSystem.mainMenu();
                 dispose();
             }

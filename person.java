@@ -20,15 +20,26 @@ public class person {
         this("null", "null", 0);
     }
     
-    public void addMeeting(meeting Meeting) {
+    public meeting[] getMeetings() {
+        return meetings;
+    }
+    
+    public boolean meetingFits(meeting Meeting) {
+        boolean fits = true;
         int start = Meeting.getTime() - 9;
         int end = start + Meeting.getDuration();
         for(int i = start; i < end; i++) {
             if(this.meetings[i] != null) {
                 System.err.println("Meeting conflicts with person's schedule.");
-                return;
+                fits = false;
             }
         }
+        return fits;
+    }
+    
+    public void addMeeting(meeting Meeting) {
+        int start = Meeting.getTime() - 9;
+        int end = start + Meeting.getDuration();        
         for(int i = start; i < end; i++)
             this.meetings[i] = Meeting;
     }
@@ -43,7 +54,7 @@ public class person {
             return;
         }
         int end = start + meetings[start].getDuration();
-        for(int i = start; i < start + end; i++)
+        for(int i = start; i < end; i++)
             meetings[i] = null;
     }
     

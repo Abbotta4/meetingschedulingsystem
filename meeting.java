@@ -26,6 +26,10 @@ public class meeting {
         return null;
     }
     
+    public boolean personFits(person newPerson) {
+        return (null == people || !people.contains(newPerson));
+    }
+    
     public void addPerson(person newPerson){
         if(null == people || !people.contains(newPerson)) {
             people.add(newPerson);

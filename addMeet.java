@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.ListSelectionModel;
@@ -98,12 +99,14 @@ public class addMeet extends JFrame {
         length.setSelectedIndex(0);
         
         times = new JPanel();
-        times.setLayout(new BorderLayout());
-        times.add(start, BorderLayout.WEST);
-        times.add(length, BorderLayout.EAST);        
-                
+        times.setLayout(new GridLayout(1, 2));
+        times.add(start);
+        times.add(length);
+        
         add(roomOptions, BorderLayout.WEST);
         add(times, BorderLayout.EAST);
+        
+        add(roomOptions, BorderLayout.CENTER);
         add(buttons, BorderLayout.SOUTH);
         
         handler buttonHandler = new handler();
@@ -169,6 +172,7 @@ public class addMeet extends JFrame {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 times.remove(start);
+                times.remove(length);
 
                 meeting[] iterMeets = MeetingSchedulingSystem.rooms.get(roomOptions.getSelectedIndex()).getMeetings();
 
@@ -199,7 +203,8 @@ public class addMeet extends JFrame {
                 start.addListSelectionListener(new listener());
 
 
-                times.add(start, BorderLayout.WEST);
+                times.add(start);
+                times.add(length);
                 times.revalidate();
             }
         }

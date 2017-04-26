@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.ListSelectionModel;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  * @author ASA5286
@@ -72,11 +73,29 @@ public class delPer extends JFrame {
         meetings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         meetings.setSelectedIndex(0);
         
-        ArrayList<person> iterPeople = iterMeets[meetings.getSelectedIndex()].getPeople();
-        
-        String[] peopleStrings = new String[iterPeople.size()];
-        for(int i = 0; i < peopleStrings.length; i++) {
-            peopleStrings[i] = String.format("%s %s : %d", iterPeople.get(i).getFirst(), iterPeople.get(i).getLast(), iterPeople.get(i).getPhone());
+        for(meeting m : iterMeets)
+            System.out.printf("%s\n", m);
+        System.out.printf("ArrayList<person> iterPeople = iterMeets[%d].getPeople();\n", meetings.getSelectedIndex());
+        int index = meetings.getSelectedIndex();
+        ArrayList<person> iterPeople;
+        if(index != -1) {
+            while(index < iterMeets.length && iterMeets[index] == null)
+                index++;
+            if(index < iterMeets.length)
+                iterPeople = iterMeets[index].getPeople();
+            else
+                iterPeople = null;
+        } else {
+            iterPeople = null;
+        }
+        String[] peopleStrings;
+        if(iterPeople != null) {
+            peopleStrings = new String[iterPeople.size()];
+            for(int i = 0; i < peopleStrings.length; i++) {
+                peopleStrings[i] = String.format("%s %s : %d", iterPeople.get(i).getFirst(), iterPeople.get(i).getLast(), iterPeople.get(i).getPhone());
+            }
+        } else {
+            peopleStrings = new String[0];
         }
         
         people = new JList<>(peopleStrings);
@@ -122,16 +141,23 @@ public class delPer extends JFrame {
                         }
                     }
                 }
-                
-                ArrayList<person> iterPeople = targetMeeting.getPeople();
-                person targetPerson = null;
-                for(person p : iterPeople) {
-                    if(people.getSelectedValue().equals(String.format("%s %s : %d", p.getFirst(), p.getLast(), p.getPhone())))
-                        targetPerson = p;
+                person targetPerson;
+                if(targetMeeting != null) {
+                    ArrayList<person> iterPeople = targetMeeting.getPeople();
+                    targetPerson = null;
+                    for(person p : iterPeople) {
+                        if(people.getSelectedValue().equals(String.format("%s %s : %d", p.getFirst(), p.getLast(), p.getPhone())))
+                            targetPerson = p;
+                    }
+                } else {
+                    targetPerson = null;
                 }
-                
-                MeetingSchedulingSystem.delFromMeeting(MeetingSchedulingSystem.rooms.get(roomOptions.getSelectedIndex()), targetMeeting, targetPerson);
-                MeetingSchedulingSystem.delParticipant(targetPerson);
+                if(targetPerson != null)
+                    MeetingSchedulingSystem.delFromMeeting(MeetingSchedulingSystem.rooms.get(roomOptions.getSelectedIndex()), targetMeeting, targetPerson);
+                if(targetPerson != null && targetPerson.noMeetings())
+                    MeetingSchedulingSystem.delParticipant(targetPerson);
+                else
+                    JOptionPane.showMessageDialog(null, "Could not delete person", "ERROR", JOptionPane.ERROR_MESSAGE);
                 MeetingSchedulingSystem.mainMenu();
                 dispose();
             }
@@ -149,11 +175,29 @@ public class delPer extends JFrame {
             remove(people);
 
             meeting[] iterMeetings = MeetingSchedulingSystem.rooms.get(roomOptions.getSelectedIndex()).getMeetings();
-            ArrayList<person> iterPeople = iterMeetings[meetings.getSelectedIndex()].getPeople();
-        
-            String[] peopleStrings = new String[iterPeople.size()];
-            for(int i = 0; i < peopleStrings.length; i++) {
-                peopleStrings[i] = String.format("%s %s : %d", iterPeople.get(i).getFirst(), iterPeople.get(i).getLast(), iterPeople.get(i).getPhone());
+            for(meeting m : iterMeetings)
+                System.out.printf("%s\n", m);
+            System.out.printf("ArrayList<person> iterPeople = iterMeetings[%d].getPeople()\n", meetings.getSelectedIndex());
+            int index = meetings.getSelectedIndex();
+            ArrayList<person> iterPeople;
+            if(index != -1) {
+                while(index < iterMeetings.length && iterMeetings[index] == null)
+                    index++;
+                if(index < iterMeetings.length)
+                    iterPeople = iterMeetings[index].getPeople();
+                else
+                    iterPeople = null;
+            } else {
+                iterPeople = null;
+            }
+            String[] peopleStrings;
+            if(iterPeople != null) {
+                peopleStrings = new String[iterPeople.size()];
+                for(int i = 0; i < peopleStrings.length; i++) {
+                    peopleStrings[i] = String.format("%s %s : %d", iterPeople.get(i).getFirst(), iterPeople.get(i).getLast(), iterPeople.get(i).getPhone());
+            }
+            } else {
+                peopleStrings = new String[0];
             }
 
             people = new JList<>(peopleStrings);

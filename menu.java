@@ -73,7 +73,7 @@ public class menu extends JFrame {
         //buttonGroup.add(delPFrM);
         buttonGroup.add(display);
                 
-        select = new JButton("Show");
+        select = new JButton("Confirm");
 
         add(addRoom);
         add(delRoom);
@@ -119,17 +119,31 @@ public class menu extends JFrame {
                     dispose();
                 }
                 if(addPer.isSelected()) {
-                    addPer addPerP = new addPer();
-                    addPerP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    addPerP.setSize(500, 300);
-                    addPerP.setVisible(true);
-                    dispose();
+                    if(!MeetingSchedulingSystem.rooms.isEmpty()) {
+                        addPer addPerP = new addPer();
+                        addPerP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        addPerP.setSize(500, 300);
+                        addPerP.setVisible(true);
+                        dispose();
+                    } else
+                        JOptionPane.showMessageDialog(null, "There are no rooms", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
                 if(delPart.isSelected()) {
-                    delPer delPerP = new delPer();
-                    delPerP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    delPerP.setSize(500, 300);
-                    delPerP.setVisible(true);
+                    if(!MeetingSchedulingSystem.rooms.isEmpty()) {
+                        delPer delPerP = new delPer();
+                        delPerP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        delPerP.setSize(500, 300);
+                        delPerP.setVisible(true);
+                        dispose();
+                    } else
+                        JOptionPane.showMessageDialog(null, "There are no rooms", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+                if(display.isSelected()) {
+                    System.out.println("rooms is not empty");
+                    display displayP = new display();
+                    displayP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    displayP.setSize(500, 300);
+                    displayP.setVisible(true);
                     dispose();
                 }
             }

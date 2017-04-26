@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.ListSelectionModel;
@@ -114,7 +115,10 @@ public class delMeet extends JFrame {
                     }
                 }
                 System.out.printf("passing delMeetin.(%d, %d)\n", roomSel, delTime);
-                MeetingSchedulingSystem.delMeeting(roomSel, delTime);
+                if(MeetingSchedulingSystem.rooms.get(roomSel).getMeetings()[delTime].getPeople().isEmpty())
+                    MeetingSchedulingSystem.delMeeting(roomSel, delTime);
+                else
+                    JOptionPane.showMessageDialog(null, "Meeting is non-emtpy", "ERROR", JOptionPane.ERROR_MESSAGE);
                 MeetingSchedulingSystem.mainMenu();
                 dispose();
             }

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
 
 /**
  * @author ASA5286
@@ -52,7 +53,10 @@ public class delRoom extends JFrame{
         public void actionPerformed(ActionEvent event) {
             int roomSel = options.getSelectedIndex();
             if(event.getSource() == confirm) {
-                MeetingSchedulingSystem.delRoom(roomSel);
+                if(MeetingSchedulingSystem.rooms.get(roomSel).isEmpty()) {
+                    MeetingSchedulingSystem.delRoom(roomSel);
+                } else
+                    JOptionPane.showMessageDialog(null, "Room is non-empty", "ERROR", JOptionPane.ERROR_MESSAGE);
                 MeetingSchedulingSystem.mainMenu();
                 dispose();
         }
