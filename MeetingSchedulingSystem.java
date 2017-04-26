@@ -96,8 +96,8 @@ public class MeetingSchedulingSystem {
         person personToAdd = new person(first, last, phone);
         for(person Person : people) {
             if(Person.equals(personToAdd)) {
-                System.err.printf("%s %s already exists in participants.\n", personToAdd.getFirst(), personToAdd.getLast());
-                return null;
+                System.out.printf("%s %s already exists in participants.\n", personToAdd.getFirst(), personToAdd.getLast());
+                return Person;
             }
         }
         people.add(personToAdd);
@@ -122,7 +122,9 @@ public class MeetingSchedulingSystem {
             System.err.println("No rooms to add person to.");
             return;
         }
+        System.out.printf("Adding %s to %s %s\n", meetingAddedTo.getName(), personToAdd.getFirst(), personToAdd.getLast());
         personToAdd.addMeeting(meetingAddedTo);
+        System.out.printf("Adding %s %s to %s\n", personToAdd.getFirst(), personToAdd.getLast(), meetingAddedTo.getName());
         meetingAddedTo.addPerson(personToAdd);
     }
     
